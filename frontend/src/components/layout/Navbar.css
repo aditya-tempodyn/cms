@@ -1,0 +1,164 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100vh;
+  background-color: #2c3e50;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+  padding: 20px;
+  border-bottom: 1px solid #34495e;
+}
+
+.brand-link {
+  text-decoration: none;
+  color: white;
+  display: block;
+}
+
+.brand-link h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #3498db;
+}
+
+.brand-link span {
+  font-size: 12px;
+  color: #bdc3c7;
+  display: block;
+  margin-top: 4px;
+}
+
+.navbar-menu {
+  flex: 1;
+  padding: 20px 0;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  color: #bdc3c7;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  border-left: 3px solid transparent;
+}
+
+.nav-link:hover {
+  background-color: #34495e;
+  color: white;
+  border-left-color: #3498db;
+}
+
+.nav-link.active {
+  background-color: #3498db;
+  color: white;
+  border-left-color: #2980b9;
+}
+
+.nav-icon {
+  margin-right: 12px;
+  font-size: 18px;
+}
+
+.navbar-user {
+  padding: 20px;
+  border-top: 1px solid #34495e;
+}
+
+.user-info {
+  margin-bottom: 15px;
+}
+
+.user-name {
+  display: block;
+  font-weight: 600;
+  color: white;
+  font-size: 14px;
+}
+
+.user-role {
+  display: block;
+  font-size: 12px;
+  color: #bdc3c7;
+  text-transform: capitalize;
+  margin-top: 2px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .navbar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px;
+  }
+
+  .navbar-brand {
+    padding: 10px 0;
+    border-bottom: none;
+  }
+
+  .brand-link h2 {
+    font-size: 20px;
+  }
+
+  .brand-link span {
+    display: none;
+  }
+
+  .navbar-menu {
+    display: flex;
+    padding: 0;
+    gap: 10px;
+  }
+
+  .nav-link {
+    padding: 10px 15px;
+    border-left: none;
+    border-bottom: 3px solid transparent;
+    border-radius: 4px;
+  }
+
+  .nav-link:hover,
+  .nav-link.active {
+    border-left: none;
+    border-bottom-color: #3498db;
+  }
+
+  .nav-icon {
+    margin-right: 5px;
+    font-size: 16px;
+  }
+
+  .navbar-user {
+    padding: 10px 0;
+    border-top: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .user-info {
+    margin-bottom: 0;
+  }
+
+  .user-name {
+    font-size: 12px;
+  }
+
+  .user-role {
+    display: none;
+  }
+} 
