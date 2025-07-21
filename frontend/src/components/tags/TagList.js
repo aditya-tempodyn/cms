@@ -78,15 +78,35 @@ const TagList = () => {
   };
 
   const getContrastColor = (hexColor) => {
-    // Convert hex to RGB
-    const r = parseInt(hexColor.slice(1, 3), 16);
-    const g = parseInt(hexColor.slice(3, 5), 16);
-    const b = parseInt(hexColor.slice(5, 7), 16);
+    // Check if hexColor is valid
+    if (!hexColor || typeof hexColor !== 'string' || hexColor.length < 7) {
+      return '#000000'; // Default to black text
+    }
     
-    // Calculate relative luminance
-    const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+    // Ensure it starts with #
+    if (!hexColor.startsWith('#')) {
+      return '#000000';
+    }
     
-    return luminance > 0.5 ? '#000000' : '#ffffff';
+    try {
+      // Convert hex to RGB
+      const r = parseInt(hexColor.slice(1, 3), 16);
+      const g = parseInt(hexColor.slice(3, 5), 16);
+      const b = parseInt(hexColor.slice(5, 7), 16);
+      
+      // Check if parsing was successful
+      if (isNaN(r) || isNaN(g) || isNaN(b)) {
+        return '#000000';
+      }
+      
+      // Calculate relative luminance
+      const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+      
+      return luminance > 0.5 ? '#000000' : '#ffffff';
+    } catch (error) {
+      console.warn('Error calculating contrast color for:', hexColor, error);
+      return '#000000'; // Default to black text
+    }
   };
 
   if (loading && tags.length === 0) {
@@ -146,12 +166,12 @@ const TagList = () => {
               <div 
                 key={tag.id} 
                 className="tag-card"
-                style={{ borderColor: tag.color }}
+                style={{ borderColor: tag.color || '#e0e0e0' }}
               >
                 <div className="tag-header">
                   <div 
                     className="tag-color-preview"
-                    style={{ backgroundColor: tag.color }}
+                    style={{ backgroundColor: tag.color || '#f0f0f0' }}
                   >
                     <span 
                       className="tag-name"

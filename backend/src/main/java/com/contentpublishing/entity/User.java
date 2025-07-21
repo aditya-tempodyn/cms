@@ -1,5 +1,6 @@
 package com.contentpublishing.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -32,6 +33,7 @@ public class User implements UserDetails {
     @Column(unique = true, nullable = false)
     private String email;
     
+    @JsonIgnore
     @NotBlank(message = "Password is required")
     @Size(min = 6, message = "Password must be at least 6 characters")
     @Column(nullable = false)
@@ -68,9 +70,11 @@ public class User implements UserDetails {
     private Boolean isEnabled = true;
     
     // Relationships
+    @JsonIgnore
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Article> articles = new ArrayList<>();
     
+    @JsonIgnore
     @OneToMany(mappedBy = "createdBy", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PublishSchedule> schedules = new ArrayList<>();
     

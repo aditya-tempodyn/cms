@@ -1,0 +1,32 @@
+# Java
+/target/
+*.class
+*.jar
+*.war
+*.ear
+
+# Maven
+/logs/
+*.log
+
+# Node
+node_modules/
+package-lock.json
+dist/
+build/
+
+# IDEs and editors
+.idea/
+*.iml
+*.swp
+*.swo
+.vscode/
+.DS_Store
+
+# OS generated files
+Thumbs.db
+.DS_Store
+
+# Others
+*.log
+.env 
