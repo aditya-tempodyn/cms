@@ -127,7 +127,7 @@ const ArticleList = () => {
           <h1>Articles</h1>
           <p>Manage your published content</p>
         </div>
-        <Link to="/articles/new">
+        <Link to="/admin/articles/new">
           <Button variant="primary">
             📝 New Article
           </Button>
@@ -198,7 +198,7 @@ const ArticleList = () => {
                 <tr key={article.id}>
                   <td>
                     <div className="article-title-cell">
-                      <Link to={`/articles/${article.id}`} className="article-title-link">
+                      <Link to={`/admin/articles/${article.id}`} className="article-title-link">
                         {article.title}
                       </Link>
                       {article.summary && (
@@ -214,12 +214,12 @@ const ArticleList = () => {
                   <td>{formatDate(article.createdAt)}</td>
                   <td>
                     <div className="action-buttons">
-                      <Link to={`/articles/${article.id}`}>
+                      <Link to={`/admin/articles/${article.id}`}>
                         <Button variant="outline" size="small">
                           View
                         </Button>
                       </Link>
-                      <Link to={`/articles/${article.id}/edit`}>
+                      <Link to={`/admin/articles/${article.id}/edit`}>
                         <Button variant="outline" size="small">
                           Edit
                         </Button>
@@ -250,7 +250,7 @@ const ArticleList = () => {
           <div className="empty-state">
             <h3>No articles found</h3>
             <p>Get started by creating your first article</p>
-            <Link to="/articles/new">
+            <Link to="/admin/articles/new">
               <Button variant="primary">
                 Create Article
               </Button>

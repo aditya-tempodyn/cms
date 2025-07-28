@@ -196,6 +196,38 @@ public class PublishScheduleService {
         }
     }
     
+    public PublishSchedule executeSchedule(Long id) {
+        try {
+            PublishSchedule schedule = scheduleRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Schedule not found with id: " + id));
+            
+            User currentUser = authService.getCurrentUser();
+            if (currentUser == null) {
+                throw new RuntimeException("User not authenticated");
+            }
+            
+            // Check if user is the creator or has admin role
+            if (!schedule.getCreatedBy().getId().equals(currentUser.getId()) && 
+                !currentUser.getRole().equals(User.Role.ADMIN)) {
+                throw new RuntimeException("Access denied: You can only execute your own schedules");
+            }
+            
+            if (schedule.getStatus() != PublishSchedule.Status.PENDING) {
+                throw new RuntimeException("Can only execute pending schedules");
+            }
+            
+            // Execute the schedule
+            executeSchedule(schedule);
+            
+            logger.info("Schedule executed successfully: {}", id);
+            return schedule;
+            
+        } catch (Exception e) {
+            logger.error("Failed to execute schedule: {}", id, e);
+            throw new RuntimeException("Failed to execute schedule: " + e.getMessage(), e);
+        }
+    }
+    
     @Scheduled(fixedRate = 60000) // Run every minute
     public void executeScheduledPublications() {
         try {

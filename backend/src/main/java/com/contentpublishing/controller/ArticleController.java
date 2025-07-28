@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -20,7 +21,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/articles")
+@RequestMapping("/api/articles")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class ArticleController {
     
@@ -79,9 +80,26 @@ public class ArticleController {
             Optional<Article> article = articleService.getArticleById(id);
             
             if (article.isPresent()) {
+                Article foundArticle = article.get();
+                
+                // Check if user is authenticated
+                boolean isAuthenticated = SecurityContextHolder.getContext().getAuthentication() != null &&
+                                        SecurityContextHolder.getContext().getAuthentication().isAuthenticated() &&
+                                        !(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof String);
+                
+                // If not authenticated, only allow access to published articles
+                if (!isAuthenticated && foundArticle.getStatus() != Article.Status.PUBLISHED) {
+                    Map<String, Object> response = new HashMap<>();
+                    response.put("success", false);
+                    response.put("message", "Article not found or not accessible");
+                    response.put("error", "NOT_FOUND");
+                    
+                    return ResponseEntity.notFound().build();
+                }
+                
                 Map<String, Object> response = new HashMap<>();
                 response.put("success", true);
-                response.put("data", article.get());
+                response.put("data", foundArticle);
                 response.put("message", "Article retrieved successfully");
                 
                 return ResponseEntity.ok(response);
@@ -106,7 +124,7 @@ public class ArticleController {
     }
     
     @PostMapping
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN') or hasRole('EDITOR')")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> createArticle(@Valid @RequestBody Article article) {
         try {
             Article createdArticle = articleService.createArticle(article);
@@ -130,7 +148,7 @@ public class ArticleController {
     }
     
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN') or hasRole('EDITOR')")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> updateArticle(@PathVariable Long id, @Valid @RequestBody Article articleDetails) {
         try {
             Article updatedArticle = articleService.updateArticle(id, articleDetails);
@@ -154,7 +172,7 @@ public class ArticleController {
     }
     
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN') or hasRole('EDITOR')")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> deleteArticle(@PathVariable Long id) {
         try {
             articleService.deleteArticle(id);

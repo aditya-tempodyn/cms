@@ -19,6 +19,23 @@
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
+/* User App Styles */
+.user-app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-main-content {
+  flex: 1;
+  min-height: calc(100vh - 70px);
+}
+
+.user-auth-content {
+  flex: 1;
+  min-height: 100vh;
+}
+
 @media (max-width: 768px) {
   .main-content {
     margin-left: 0;

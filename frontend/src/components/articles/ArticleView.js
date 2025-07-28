@@ -120,12 +120,12 @@ const ArticleView = () => {
     <div className="article-view">
       {/* Navigation */}
       <div className="article-nav">
-        <Link to="/articles" className="back-link">
+        <Link to="/admin/articles" className="back-link">
           ← Back to Articles
         </Link>
         
         <div className="article-actions">
-          <Link to={`/articles/${id}/edit`}>
+          <Link to={`/admin/articles/${id}/edit`}>
             <Button variant="outline" size="small">
               ✏️ Edit
             </Button>

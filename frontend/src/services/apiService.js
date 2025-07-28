@@ -13,7 +13,11 @@ const api = axios.create({
 // Request interceptor to add auth token
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
+    // Try to get admin token first, then user token
+    const adminToken = localStorage.getItem('token');
+    const userToken = localStorage.getItem('userToken');
+    const token = adminToken || userToken;
+    
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -31,10 +35,18 @@ api.interceptors.response.use(
   },
   (error) => {
     if (error.response?.status === 401) {
-      // Token expired or invalid
+      // Token expired or invalid - clear both admin and user tokens
       localStorage.removeItem('token');
+      localStorage.removeItem('userToken');
       localStorage.removeItem('user');
-      window.location.href = '/login';
+      
+      // Redirect based on current path
+      const currentPath = window.location.pathname;
+      if (currentPath.startsWith('/user')) {
+        window.location.href = '/user/login';
+      } else {
+        window.location.href = '/admin/login';
+      }
     }
     return Promise.reject(error);
   }

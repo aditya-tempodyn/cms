@@ -13,7 +13,7 @@ const ScheduleForm = () => {
 
   const [formData, setFormData] = useState({
     articleId: '',
-    scheduledFor: '',
+    scheduledAt: '',
     description: ''
   });
 
@@ -51,8 +51,8 @@ const ScheduleForm = () => {
         const schedule = response.data.data;
         setFormData({
           articleId: schedule.article?.id || '',
-          scheduledFor: schedule.scheduledFor ? 
-            new Date(schedule.scheduledFor).toISOString().slice(0, 16) : '',
+          scheduledAt: schedule.scheduledAt ? 
+            new Date(schedule.scheduledAt).toISOString().slice(0, 16) : '',
           description: schedule.description || ''
         });
       }
@@ -88,14 +88,14 @@ const ScheduleForm = () => {
       errors.articleId = 'Please select an article to schedule';
     }
 
-    if (!formData.scheduledFor) {
-      errors.scheduledFor = 'Scheduled date and time is required';
+    if (!formData.scheduledAt) {
+      errors.scheduledAt = 'Scheduled date and time is required';
     } else {
-      const scheduledDate = new Date(formData.scheduledFor);
+      const scheduledDate = new Date(formData.scheduledAt);
       const now = new Date();
       
       if (scheduledDate <= now) {
-        errors.scheduledFor = 'Scheduled time must be in the future';
+        errors.scheduledAt = 'Scheduled time must be in the future';
       }
       
       // Check if it's more than 1 year in the future
@@ -103,7 +103,7 @@ const ScheduleForm = () => {
       oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1);
       
       if (scheduledDate > oneYearFromNow) {
-        errors.scheduledFor = 'Scheduled time cannot be more than 1 year in the future';
+        errors.scheduledAt = 'Scheduled time cannot be more than 1 year in the future';
       }
     }
 
@@ -128,7 +128,7 @@ const ScheduleForm = () => {
       
       const submitData = {
         articleId: parseInt(formData.articleId),
-        scheduledFor: new Date(formData.scheduledFor).toISOString(),
+        scheduledAt: new Date(formData.scheduledAt).toISOString(),
         description: formData.description || null
       };
 
@@ -172,9 +172,9 @@ const ScheduleForm = () => {
   };
 
   const formatSchedulePreview = () => {
-    if (!formData.scheduledFor) return null;
+    if (!formData.scheduledAt) return null;
     
-    const scheduledDate = new Date(formData.scheduledFor);
+    const scheduledDate = new Date(formData.scheduledAt);
     const now = new Date();
     const diff = scheduledDate - now;
     
@@ -251,11 +251,11 @@ const ScheduleForm = () => {
 
             <FormInput
               type="datetime-local"
-              name="scheduledFor"
+              name="scheduledAt"
               label="Scheduled Date & Time"
-              value={formData.scheduledFor}
+              value={formData.scheduledAt}
               onChange={handleInputChange}
-              error={validationErrors.scheduledFor}
+              error={validationErrors.scheduledAt}
               min={getMinDateTime()}
               max={getMaxDateTime()}
               required

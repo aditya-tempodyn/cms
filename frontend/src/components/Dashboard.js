@@ -164,7 +164,7 @@ const Dashboard = () => {
         <div className="dashboard-section">
           <div className="section-header">
             <h2>Recent Articles</h2>
-            <Link to="/articles">
+            <Link to="/admin/articles">
               <Button variant="outline" size="small">
                 View All
               </Button>
@@ -176,7 +176,7 @@ const Dashboard = () => {
                 <div key={article.id} className="article-item">
                   <div className="article-info">
                     <h4>
-                      <Link to={`/articles/${article.id}`} className="article-link">
+                      <Link to={`/admin/articles/${article.id}`} className="article-link">
                         {article.title}
                       </Link>
                     </h4>
@@ -187,7 +187,7 @@ const Dashboard = () => {
                     </p>
                   </div>
                   <div className="article-actions">
-                    <Link to={`/articles/${article.id}/edit`}>
+                    <Link to={`/admin/articles/${article.id}/edit`}>
                       <Button variant="outline" size="small">
                         Edit
                       </Button>
@@ -197,7 +197,7 @@ const Dashboard = () => {
               ))
             ) : (
               <div className="empty-state">
-                <p>No articles yet. <Link to="/articles/new">Create your first article</Link></p>
+                <p>No articles yet. <Link to="/admin/articles/new">Create your first article</Link></p>
               </div>
             )}
           </div>
@@ -209,17 +209,17 @@ const Dashboard = () => {
           <div className="dashboard-section">
             <h2>Quick Actions</h2>
             <div className="quick-actions">
-              <Link to="/articles/new">
+              <Link to="/admin/articles/new">
                 <Button variant="primary" fullWidth>
                   📝 New Article
                 </Button>
               </Link>
-              <Link to="/tags/new">
+              <Link to="/admin/tags/new">
                 <Button variant="secondary" fullWidth>
                   🏷️ Create Tag
                 </Button>
               </Link>
-              <Link to="/schedules/new">
+              <Link to="/admin/schedules/new">
                 <Button variant="outline" fullWidth>
                   ⏰ Schedule Publication
                 </Button>
@@ -236,7 +236,7 @@ const Dashboard = () => {
                   <div key={article.id} className="popular-item">
                     <span className="rank">#{index + 1}</span>
                     <div className="item-info">
-                      <Link to={`/articles/${article.id}`} className="item-title">
+                      <Link to={`/admin/articles/${article.id}`} className="item-title">
                         {article.title}
                       </Link>
                       <span className="item-meta">{article.viewCount} views</span>

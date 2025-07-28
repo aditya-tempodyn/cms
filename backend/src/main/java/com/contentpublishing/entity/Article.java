@@ -1,5 +1,6 @@
 package com.contentpublishing.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -8,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "schedules"})
 @Entity
 @Table(name = "articles")
 public class Article {
@@ -27,7 +29,7 @@ public class Article {
     private String content;
     
     @Size(max = 500, message = "Summary must not exceed 500 characters")
-    @Column
+    @Column(length = 500)
     private String summary;
     
     @Enumerated(EnumType.STRING)

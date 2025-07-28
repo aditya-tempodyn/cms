@@ -1,0 +1,145 @@
+.user-navbar {
+  background: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.user-navbar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
+}
+
+.user-navbar-brand {
+  display: flex;
+  align-items: center;
+}
+
+.user-navbar-logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #333;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.user-navbar-logo:hover {
+  color: #667eea;
+}
+
+.user-navbar-menu {
+  display: flex;
+  gap: 30px;
+}
+
+.user-navbar-link {
+  color: #555;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  padding: 8px 16px;
+  border-radius: 8px;
+}
+
+.user-navbar-link:hover {
+  color: #667eea;
+  background: #f8f9fa;
+}
+
+.user-navbar-auth {
+  display: flex;
+  align-items: center;
+}
+
+.user-navbar-auth-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.user-navbar-login,
+.user-navbar-register {
+  padding: 8px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.user-navbar-login {
+  color: #667eea;
+  border: 2px solid #667eea;
+}
+
+.user-navbar-login:hover {
+  background: #667eea;
+  color: white;
+}
+
+.user-navbar-register {
+  background: #667eea;
+  color: white;
+  border: 2px solid #667eea;
+}
+
+.user-navbar-register:hover {
+  background: #5a6fd8;
+  border-color: #5a6fd8;
+}
+
+.user-navbar-user {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.user-navbar-username {
+  color: #555;
+  font-weight: 500;
+}
+
+.user-navbar-logout {
+  padding: 8px 20px;
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.3s ease;
+}
+
+.user-navbar-logout:hover {
+  background: #c82333;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .user-navbar-container {
+    padding: 0 15px;
+  }
+  
+  .user-navbar-menu {
+    gap: 15px;
+  }
+  
+  .user-navbar-link {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
+  
+  .user-navbar-auth-buttons {
+    gap: 10px;
+  }
+  
+  .user-navbar-login,
+  .user-navbar-register {
+    padding: 6px 15px;
+    font-size: 0.9rem;
+  }
+} 

@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.ArrayList;
 
 @Service
 @Transactional
@@ -149,7 +150,7 @@ public class ArticleService {
                         }
                     })
                     .toList();
-                article.setTags(processedTags);
+                article.setTags(new ArrayList<>(processedTags));
             }
             
             Article updatedArticle = articleRepository.save(article);

@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/tags")
+@RequestMapping("/api/tags")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class TagController {
     
@@ -104,7 +104,7 @@ public class TagController {
     }
     
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN') or hasRole('EDITOR')")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> createTag(@Valid @RequestBody Tag tag) {
         try {
             Tag createdTag = tagService.createTag(tag);
@@ -128,7 +128,7 @@ public class TagController {
     }
     
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('EDITOR')")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> updateTag(@PathVariable Long id, @Valid @RequestBody Tag tagDetails) {
         try {
             Tag updatedTag = tagService.updateTag(id, tagDetails);
@@ -152,7 +152,7 @@ public class TagController {
     }
     
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> deleteTag(@PathVariable Long id) {
         try {
             tagService.deleteTag(id);

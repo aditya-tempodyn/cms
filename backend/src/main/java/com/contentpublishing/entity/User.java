@@ -1,6 +1,7 @@
 package com.contentpublishing.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "articles", "schedules"})
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {

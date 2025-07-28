@@ -11,7 +11,7 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     await logout();
-    navigate('/login');
+    navigate('/admin/login');
   };
 
   const isActive = (path) => {
@@ -21,7 +21,7 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-brand">
-        <Link to="/dashboard" className="brand-link">
+        <Link to="/admin/dashboard" className="brand-link">
           <h2>CPS</h2>
           <span>Content Publishing System</span>
         </Link>
@@ -29,32 +29,32 @@ const Navbar = () => {
 
       <div className="navbar-menu">
         <Link 
-          to="/dashboard" 
-          className={`nav-link ${isActive('/dashboard') ? 'active' : ''}`}
+          to="/admin/dashboard" 
+          className={`nav-link ${isActive('/admin/dashboard') ? 'active' : ''}`}
         >
           <span className="nav-icon">📊</span>
           Dashboard
         </Link>
         
         <Link 
-          to="/articles" 
-          className={`nav-link ${isActive('/articles') ? 'active' : ''}`}
+          to="/admin/articles" 
+          className={`nav-link ${isActive('/admin/articles') ? 'active' : ''}`}
         >
           <span className="nav-icon">📝</span>
           Articles
         </Link>
         
         <Link 
-          to="/tags" 
-          className={`nav-link ${isActive('/tags') ? 'active' : ''}`}
+          to="/admin/tags" 
+          className={`nav-link ${isActive('/admin/tags') ? 'active' : ''}`}
         >
           <span className="nav-icon">🏷️</span>
           Tags
         </Link>
         
         <Link 
-          to="/schedules" 
-          className={`nav-link ${isActive('/schedules') ? 'active' : ''}`}
+          to="/admin/schedules" 
+          className={`nav-link ${isActive('/admin/schedules') ? 'active' : ''}`}
         >
           <span className="nav-icon">⏰</span>
           Schedules

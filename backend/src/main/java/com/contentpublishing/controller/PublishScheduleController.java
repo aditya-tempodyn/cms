@@ -1,6 +1,8 @@
 package com.contentpublishing.controller;
 
+import com.contentpublishing.entity.Article;
 import com.contentpublishing.entity.PublishSchedule;
+import com.contentpublishing.repository.ArticleRepository;
 import com.contentpublishing.service.PublishScheduleService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -16,12 +18,13 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/schedules")
+@RequestMapping("/api/schedules")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class PublishScheduleController {
     
@@ -29,6 +32,9 @@ public class PublishScheduleController {
     
     @Autowired
     private PublishScheduleService scheduleService;
+    
+    @Autowired
+    private ArticleRepository articleRepository;
     
     @GetMapping
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN') or hasRole('EDITOR')")
@@ -107,31 +113,35 @@ public class PublishScheduleController {
     }
     
     @PostMapping
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN') or hasRole('EDITOR')")
-    public ResponseEntity<?> createSchedule(@Valid @RequestBody PublishSchedule schedule) {
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> createSchedule(@RequestBody Map<String, Object> payload) {
         try {
+            Long articleId = payload.get("articleId") != null ? Long.valueOf(payload.get("articleId").toString()) : null;
+            Article article = articleId != null ? articleRepository.findById(articleId).orElse(null) : null;
+            if (article == null) {
+                throw new RuntimeException("Article not found");
+            }
+            PublishSchedule schedule = new PublishSchedule();
+            schedule.setArticle(article);
+            schedule.setScheduledAt(OffsetDateTime.parse(payload.get("scheduledAt").toString()).toLocalDateTime());
             PublishSchedule createdSchedule = scheduleService.createSchedule(schedule);
-            
             Map<String, Object> response = new HashMap<>();
             response.put("success", true);
             response.put("data", createdSchedule);
             response.put("message", "Schedule created successfully");
-            
             return ResponseEntity.ok(response);
-            
         } catch (Exception e) {
             logger.error("Failed to create schedule", e);
             Map<String, Object> response = new HashMap<>();
             response.put("success", false);
             response.put("message", e.getMessage());
             response.put("error", "CREATE_FAILED");
-            
             return ResponseEntity.badRequest().body(response);
         }
     }
     
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN') or hasRole('EDITOR')")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> updateSchedule(@PathVariable Long id, @Valid @RequestBody PublishSchedule scheduleDetails) {
         try {
             PublishSchedule updatedSchedule = scheduleService.updateSchedule(id, scheduleDetails);
@@ -155,7 +165,7 @@ public class PublishScheduleController {
     }
     
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN') or hasRole('EDITOR')")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> deleteSchedule(@PathVariable Long id) {
         try {
             scheduleService.deleteSchedule(id);
@@ -196,6 +206,30 @@ public class PublishScheduleController {
             response.put("success", false);
             response.put("message", e.getMessage());
             response.put("error", "CANCEL_FAILED");
+            
+            return ResponseEntity.badRequest().body(response);
+        }
+    }
+    
+    @PostMapping("/{id}/execute")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN') or hasRole('EDITOR')")
+    public ResponseEntity<?> executeSchedule(@PathVariable Long id) {
+        try {
+            PublishSchedule executedSchedule = scheduleService.executeSchedule(id);
+            
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", true);
+            response.put("data", executedSchedule);
+            response.put("message", "Schedule executed successfully");
+            
+            return ResponseEntity.ok(response);
+            
+        } catch (Exception e) {
+            logger.error("Failed to execute schedule: {}", id, e);
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", false);
+            response.put("message", e.getMessage());
+            response.put("error", "EXECUTE_FAILED");
             
             return ResponseEntity.badRequest().body(response);
         }

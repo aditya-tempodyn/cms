@@ -208,7 +208,7 @@ const TagList = () => {
                 </div>
                 
                 <div className="tag-actions">
-                  <Link to={`/tags/${tag.id}/edit`}>
+                  <Link to={`/admin/tags/${tag.id}/edit`}>
                     <Button variant="outline" size="small">
                       Edit
                     </Button>
@@ -229,7 +229,7 @@ const TagList = () => {
             <div className="empty-icon">🏷️</div>
             <h3>No tags found</h3>
             <p>Get started by creating your first tag to organize your content</p>
-            <Link to="/tags/new">
+            <Link to="/admin/tags/new">
               <Button variant="primary">
                 Create Tag
               </Button>

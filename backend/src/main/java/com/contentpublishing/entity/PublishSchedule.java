@@ -1,11 +1,13 @@
 package com.contentpublishing.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "article", "createdBy"})
 @Entity
 @Table(name = "publish_schedules")
 public class PublishSchedule {

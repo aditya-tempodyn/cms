@@ -26,7 +26,7 @@ const ScheduleList = () => {
       const params = {
         page: currentPage,
         size: 10,
-        sortBy: 'scheduledFor',
+        sortBy: 'scheduledAt',
         sortDir: 'asc',
         ...filters
       };
@@ -139,9 +139,9 @@ const ScheduleList = () => {
     );
   };
 
-  const getTimeUntilSchedule = (scheduledFor) => {
+  const getTimeUntilSchedule = (scheduledAt) => {
     const now = new Date();
-    const scheduled = new Date(scheduledFor);
+    const scheduled = new Date(scheduledAt);
     const diff = scheduled - now;
     
     if (diff < 0) {
@@ -238,7 +238,7 @@ const ScheduleList = () => {
                     <div className="article-info">
                       {schedule.article ? (
                         <Link 
-                          to={`/articles/${schedule.article.id}`} 
+                          to={`/admin/articles/${schedule.article.id}`} 
                           className="article-link"
                         >
                           {schedule.article.title}
@@ -256,11 +256,11 @@ const ScheduleList = () => {
                   <td>
                     <div className="schedule-time">
                       <div className="scheduled-date">
-                        {formatDate(schedule.scheduledFor)}
+                        {formatDate(schedule.scheduledAt)}
                       </div>
                       {schedule.status === 'PENDING' && (
-                        <div className={`time-remaining ${getTimeUntilSchedule(schedule.scheduledFor) === 'Overdue' ? 'overdue' : ''}`}>
-                          {getTimeUntilSchedule(schedule.scheduledFor)}
+                        <div className={`time-remaining ${getTimeUntilSchedule(schedule.scheduledAt) === 'Overdue' ? 'overdue' : ''}`}>
+                          {getTimeUntilSchedule(schedule.scheduledAt)}
                         </div>
                       )}
                     </div>
@@ -269,8 +269,8 @@ const ScheduleList = () => {
                   <td>
                     <div className="time-info">
                       {schedule.status === 'PENDING' ? (
-                        <span className={`countdown ${getTimeUntilSchedule(schedule.scheduledFor) === 'Overdue' ? 'overdue' : ''}`}>
-                          {getTimeUntilSchedule(schedule.scheduledFor)}
+                        <span className={`countdown ${getTimeUntilSchedule(schedule.scheduledAt) === 'Overdue' ? 'overdue' : ''}`}>
+                          {getTimeUntilSchedule(schedule.scheduledAt)}
                         </span>
                       ) : (
                         <span className="completed-time">
@@ -286,7 +286,7 @@ const ScheduleList = () => {
                   </td>
                   <td>
                     <div className="action-buttons">
-                      <Link to={`/schedules/${schedule.id}/edit`}>
+                      <Link to={`/admin/schedules/${schedule.id}/edit`}>
                         <Button variant="outline" size="small">
                           Edit
                         </Button>
@@ -329,7 +329,7 @@ const ScheduleList = () => {
             <div className="empty-icon">⏰</div>
             <h3>No schedules found</h3>
             <p>Create your first schedule to automatically publish articles</p>
-            <Link to="/schedules/new">
+            <Link to="/admin/schedules/new">
               <Button variant="primary">
                 Create Schedule
               </Button>

@@ -60,9 +60,13 @@ public class SecurityConfig {
             .exceptionHandling(exception -> exception.authenticationEntryPoint(jwtAuthenticationEntryPoint))
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(authz -> authz
-                .requestMatchers("/auth/**").permitAll()
-                .requestMatchers("/public/**").permitAll()
+                .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/api/public/**").permitAll()
+                .requestMatchers("/api/articles/published").permitAll()
+                .requestMatchers("/api/articles/most-viewed").permitAll()
+                .requestMatchers("/api/articles/*").permitAll() // Allow access to individual articles
                 .requestMatchers("/h2-console/**").permitAll()
+                .requestMatchers("/error").permitAll()
                 .anyRequest().authenticated()
             );
         

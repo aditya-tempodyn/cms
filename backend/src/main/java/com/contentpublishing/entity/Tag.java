@@ -1,5 +1,6 @@
 package com.contentpublishing.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -8,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "articles"})
 @Entity
 @Table(name = "tags")
 public class Tag {
