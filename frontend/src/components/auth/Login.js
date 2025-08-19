@@ -18,7 +18,7 @@ const Login = () => {
 
   useEffect(() => {
     if (isAuthenticated()) {
-      navigate('/dashboard');
+      navigate('/admin/dashboard');
     }
   }, [isAuthenticated, navigate]);
 
@@ -73,7 +73,7 @@ const Login = () => {
     try {
       const result = await login(formData);
       if (result.success) {
-        navigate('/dashboard');
+        navigate('/admin/dashboard');
       }
     } catch (error) {
       console.error('Login error:', error);
@@ -134,7 +134,7 @@ const Login = () => {
         <div className="auth-footer">
           <p>
             Don't have an account?{' '}
-            <Link to="/register" className="auth-link">
+            <Link to="/admin/register" className="auth-link">
               Sign up here
             </Link>
           </p>

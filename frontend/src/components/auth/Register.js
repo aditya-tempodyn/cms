@@ -23,7 +23,7 @@ const Register = () => {
 
   useEffect(() => {
     if (isAuthenticated()) {
-      navigate('/dashboard');
+      navigate('/admin/dashboard');
     }
   }, [isAuthenticated, navigate]);
 
@@ -129,7 +129,7 @@ const Register = () => {
         });
         // Redirect to login after successful registration
         setTimeout(() => {
-          navigate('/login');
+          navigate('/admin/login');
         }, 2000);
       }
     } catch (error) {
@@ -240,7 +240,7 @@ const Register = () => {
         <div className="auth-footer">
           <p>
             Already have an account?{' '}
-            <Link to="/login" className="auth-link">
+            <Link to="/admin/login" className="auth-link">
               Sign in here
             </Link>
           </p>
